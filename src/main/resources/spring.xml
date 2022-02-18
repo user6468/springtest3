@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+ http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+ http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.3.xsd
+">
+    <bean id="cola" class="com.jy.utils.water.subclass.Cola" scope="singleton" p:count="1000" p:name="可乐"></bean>
+    <bean id="orange" class="com.jy.utils.water.subclass.Orange" scope="prototype" p:name="橙汁" p:count="1000"></bean>
+
+    <bean id="american" class="com.jy.utils.drinking.subclass.American" autowire="byName"></bean>
+    <bean id="korean" class="com.jy.utils.drinking.subclass.Korean" autowire="byName"></bean>
+    <bean id="chinese" class="com.jy.utils.drinking.subclass.Chinese" autowire="byName"></bean>
+    <bean id="personService" class="com.jy.utils.drinking.PersonServiceImpl" autowire="byName"></bean>
+
+    <bean id="waterMachineFactory" class="com.jy.utils.watermaching.WaterMachineFactory" scope="prototype"></bean>
+
+    <bean id="getCola" factory-bean="waterMachineFactory" factory-method="output" scope="singleton">
+        <constructor-arg value="1"></constructor-arg>
+    </bean>
+
+    <bean id="getOrange" factory-bean="waterMachineFactory" factory-method="output" scope="prototype">
+        <constructor-arg value="2"></constructor-arg>
+    </bean>
+
+    <context:component-scan base-package="com.jy">
+    </context:component-scan>
+    <!-- 是Aspect注解⽣效，为⽬标类⾃动⽣成代理对象 -->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+</beans>
